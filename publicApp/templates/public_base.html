@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GIAS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content=""> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'main/images/pnds1.jpg' %}">
+    <link rel="stylesheet" href="{% static 'main/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/table-responsive.css' %}" media="screen">
+    <link href="{% static 'main/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/mapa.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/amap.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/popup.css' %}" rel="stylesheet">
+    <link href="{% static 'main/css/homeP.css' %}" rel="stylesheet">
+    <link href="{% static 'css/fig.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link ke Bootstrap untuk Layout -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Menggunakan Bootstrap untuk styling tabel -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Grafik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <!-- Leaflet CSS -->
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+      <!-- Leaflet JavaScript -->
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <!-- Leaflet Fullscreen CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/leaflet.fullscreen.css" />
+      <!-- Leaflet Fullscreen JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/Leaflet.fullscreen.min.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'Leaflet.markercluster-1.4.1/dist/MarkerCluster.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css' %}">
+        <script src="{% static 'Leaflet.markercluster-1.4.1/dist/leaflet.markercluster-src.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" crossorigin="" />
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+
+
+        <link rel="stylesheet" href="{% static 'Leaflet.markercluster-1.4.1/dist/leaflet-control-geocoder.Geocoder.css' %}">
+        <script src="{% static 'Leaflet.markercluster-1.4.1/src/leaflet-control-geocoder.Geocoder.js' %}"></script>
+        
+    <!--Charts CDN-->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+   <!--End Charts CDN-->
+   
+    {% block headStyle %}{% endblock %}  
+</head> 
+<body style="background: #fff;">
+    {% include 'sidebarP.html' %}
+<div class="container-fluid">
+    {% block content %} 
+    {% endblock %}
+</div>
+<footer class="footer-container text-dark text-center mt-5 p-3">
+  <div class="text-dark">
+    © 2024 Copyright :
+    <a href="{% url 'home' %}">GIAS</a>
+  </div>
+  <small class="text-dark">
+    Developed by :
+    <a href="mailto:eligiojojoalianca@gmail.com" target="_blank">info_0XVII</a> 
+  </small>
+</footer>
+</body> 
+<!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="{% static 'main/js/jquery.min.js' %}"></script>
+        <!-- <script src="{% static 'main/bootstrap/js/bootstrap.min.js' %}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+        <script src="{% static 'main/bootstrap/js/bootstrap.min.js' %}"></script>
+        <!-- Datatable -->
+        <link href="{% static 'main/datatables/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+        <script src="{% static 'main/datatables/js/jquery.dataTables.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'main/datatables/js/dataTables.bootstrap4.min.js' %}" type="text/javascript"></script>
+  
+        <script src="{% static 'main/notif/notif_badge_dir_mun.js' %}"></script>
+        <script src="{% static 'main/notif/notif_badge_rejected.js' %}"></script>
+
+        {% block scripts %}{% endblock %}

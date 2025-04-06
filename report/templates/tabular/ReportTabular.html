@@ -1,0 +1,143 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+            <!-- Summary Cards -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body text-center">
+                            <h4>TOTAL CIDADAUN FETO</h4>
+                            <h2>
+                                <a href="#" target="_blank" class="text-white" style="text-decoration: underline;">
+                                    {{ total_seksu_Feto }}
+                                </a>
+                            </h2>
+                            {% if not is_admin %}
+                            <small class="text-white-50">Suku: {{ request.user.adminsuku.village.name }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body text-center">
+                            <h4>TOTAL CIDADAUN MANE</h4>
+                            <h2>
+                                <a href="#" class="text-white" style="text-decoration: underline;">
+                                    {{ total_seksu_Mane }}
+                                </a>
+                            </h2>
+                            {% if not is_admin %}
+                            <small class="text-white-50">Suku: {{ request.user.adminsuku.village.name }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Family Table -->
+            <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Nu</th>
+                            <th>NOME XEFE FAMILIA</th>
+                            <th>Filho</th>
+                            <th>Filha</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for xx in loopingCandidatoseksu %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ xx.xefe_Familia }}</td>
+                            <td>{{ xx.total_seksu_Mane|default:"0" }}</td>
+                            <td>{{ xx.total_seksu_Feto|default:"0" }}</td>
+                            <td><a href="{% url 'PrintFixa' xx.id %}">{{ xx.total_estudante|default:"0" }}</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                {% if is_admin %}
+                                    Nenhuma família cadastrada
+                                {% else %}
+                                    Nenhuma família encontrada no Suku {{ request.user.adminsuku.village.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Village Table -->
+            <br><br>
+            <hr>
+            <h4 class="text-center">
+                RELATORIU TOTAL CIDADAUN TUIR SUCO
+                {% if not is_admin %}
+                - SUKU: {{ request.user.adminsuku.village.name|upper }}
+                {% endif %}
+            </h4>
+            <hr>
+
+            <div class="table-responsive">
+                <table id="example" class="table table-bordered table-striped w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Nu</th>
+                            <th>Suku</th>
+                            <th>Mane</th>
+                            <th>Feto</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for xx in loopingMembruFamiliaTuirSuco %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'public_membruFamilia_suku_aldeia' xx.id %}">{{ xx.name }}</a></td>
+                            <td>{{ xx.total_M|default:"0" }}</td>
+                            <td>{{ xx.t_Feto|default:"0" }}</td>
+                            <td>{{ xx.total|default:"0" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                {% if is_admin %}
+                                    Nenhum suku cadastrado
+                                {% else %}
+                                    Nenhum dado encontrado para o Suku {{ request.user.adminsuku.village.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript includes -->
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'Charts/chart.js/chart.min.js' %}"></script>
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1, #example').DataTable({
+            language: {
+                url: "{% static 'js/Portuguese-Brasil.json' %}" // Add if using Portuguese
+            }
+        });
+    });
+</script>
+{% endblock %}

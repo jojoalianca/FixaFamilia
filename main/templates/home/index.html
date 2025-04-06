@@ -1,0 +1,14 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		{% if user.groups.all.0.name == 'admin' %}
+			{% include 'home/indexAdminNacional.html' %}
+		{% elif user.groups.all.0.name == 'admAleia' %}
+			{% include 'home/indexAdminAldeia.html' %}
+		{% elif user.groups.all.0.name == 'Admin Suku' %}
+			{% include 'home/indexAdminSuco.html' %}
+		{% endif %}
+	{% endif %}
+{% endblock %}

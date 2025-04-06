@@ -1,0 +1,85 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3>{{ title|upper }}</h3>
+            <hr/>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body text-center">
+                            <h4>TOTAL CIDADAUN FETO</h4>
+                            <h2>
+                                <a href="#" target="_blank" class="text-white" style="text-decoration: underline;">
+                                    {{ totalFKAsukuF }}
+                                </a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body text-center">
+                            <h4>TOTAL CIDADAUN MANE</h4>
+                            <h2>
+                                <a href="#" class="text-white" style="text-decoration: underline;">
+                                    {{ totalFKAsukuM }}
+                                </a>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <hr><hr>
+            <h4 class="text-center">RELATORIU TOTAL CIDADAUN TUIR ALDEIA IHA POSTU LAUTEM</h4>
+            <hr>
+             <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Nu</th>
+                            <th>Aldeia</th>
+                            <th>Mane</th>
+                            <th>Feto</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for xx in loopingFKAaldeia %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ xx.name }}</td>
+                            <td>{{ xx.total_sexo_Mane_mun|default:"0" }}</td>
+                            <td>{{ xx.total_sexo_Feto_mun|default:"0" }}</td>
+                            <td>{{ xx.totalFKA|default:"0" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include JavaScript files at the end of the body for better page load performance -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="{% static 'Charts/chart.js/chart.min.js' %}"></script>
+<script src="{% static 'js/apexcharts.min.js' %}"></script>
+<script src="{% static 'Charts/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/echarts.min.js' %}"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#example1').DataTable();
+    });
+</script>
+{% endblock %}

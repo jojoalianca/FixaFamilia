@@ -1,0 +1,47 @@
+{% extends 'public_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<section>
+  <div class="container-fluid"> 
+  {% for data in historia_eskola %} 
+   <div class="col-lg-12 mb-4">
+      <div class="card">
+        <!-- Header with image and optional update button -->
+        <div class="card-header p-0">
+          <img src="{% static 'main/images/logo/e.JPEG' %}" alt="Logo" class="img-fluid" style="width:100%; height:500px; object-fit: cover;">
+          {% if group == "admin" %}
+            <div class="btn-group" style="position: absolute; top: 10px; right: 10px;">
+              <a href="{% url 'update-historia' data.id %}" class="btn btn-sm btn-outline-info"><i class="fa fa-edit"></i> UPDATE</a>
+            </div>
+          {% endif %}
+        </div>
+        
+        <!-- Main card content -->
+        <div class="card-body">
+          <div class="row">
+            <!-- Historia Eskola -->
+            <div class="col-lg-12 mb-4">
+              <p>{{ data.historia_eskola|safe }}</p>
+            </div>
+            
+            <!-- Vizaun & Missaun -->
+            <div class="col-lg-6 mb-4">
+              <h5>Vizaun & Missaun</h5>
+              <p>{{ data.visaun|safe }}</p>
+              <p>{{ data.Missaun|safe }}</p>
+            </div>
+            
+            <!-- Motto -->
+            <div class="col-lg-6 mb-4">
+              <h5>Motto</h5>
+              <p>{{ data.Motto|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</section>  
+{% endblock %}

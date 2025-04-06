@@ -1,0 +1,82 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+    <header> 
+      <ol class="breadcrumb mb-1 mt-1">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Beranda</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+      </ol>
+    </header>
+    <div class="row">
+    <div class="col-sm-12">
+      <div class="card shadow-lg pt-1 border-danger rounded">
+        <div class="card-header ">{{ title }}
+          <div class="d-flex justify-content-end"><a href="{% url 'register_admin_suku' %}" class="btn btn-sm btn-info mb-2"><i class="fa fa-plus-square"></i> Resistu Novu User</a> 
+        </div>
+        <div class="card-body">
+                  <section id='no-more-tables'>
+                    <table id="example"  class="table table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Username</th>
+                          <!-- <th>Email</th> -->
+                          <th>User Status</th>
+                          <th>User Group</th>
+                          <th>Date Created</th>
+                          <!-- <th>Password</th> -->
+                          <th>Asaun</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data in userlist %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td>{{ data.username }}</td>
+                          <!-- <td>{{ data.email }}</td> -->
+                          <td>{% if data.is_active %}<span class="badge badge-secondary">Ativu</span><a title="Desativa Utilizador" href="{% url 'desativuUser' data.id  %}"><span class="ml-2 badge bg-danger text-white"> x </span></a>{% else %}<span class="badge badge-warning">La Ativu</span> <a title="Ativa Utilizador" href="{% url 'ativuUser' data.id  %}"><span class="ml-2 badge bg-primary text-white">&#10003;</span></a>{% endif %}</td>
+                          <td>{% for group in data.groups.all %}{{ group }}{% endfor %}</td>
+                          <td>{{ data.date_joined }}</td>
+                          <!-- <td><a href="{% url 'home' %}"><span class="badge badge-secondary">Reset</span></a></td> -->
+                          <td> <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{ data.id }}" style="text-decoration: none"><i class="fa fa-trash"></i></button></td>
+
+                          <div class="modal fade" id="delete-{{ data.id}}"><!-- modal -->
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <!-- Modal Header --> 
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Delete User</h4>
+                                  <button type="button" class="close" data-dismiss="modal">X</button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  Ita Boot hakarak hamoos Utilizador ho username {{ data.username | upper }}?
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                  <a href="{% url 'deleteUser' data.id %}" class="btn btn-info">Yes</a>
+                                </div>
+                              </div>
+                            </div>
+                        </div><!-- endmodal -->
+                        </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </section>
+        </div> <!--end card-body-->
+      </div> <!--end card-->
+    </div> <!--end col-->
+  </div> <!--end row-->
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready( function () {
+        var table = $('#example').removeAttr('width').DataTable( {
+            
+        });
+    } );
+</script>
+{% endblock %}

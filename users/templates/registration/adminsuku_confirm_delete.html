@@ -1,0 +1,13 @@
+{% extends "main/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <h2>Konfirmasi Hapus</h2>
+  <p>Apakah Anda yakin ingin menghapus admin suku <strong>{{ admin_suku.user.username }}</strong> dari suku <strong>{{ admin_suku.village.name }}</strong>?</p>
+  
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Ya, Hapus</button>
+    <a href="{% url 'admin_suku_list' %}">Batal</a>
+  </form>
+{% endblock %}

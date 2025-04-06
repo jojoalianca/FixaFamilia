@@ -1,0 +1,174 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  <section>
+        <div class="container mt-5 border border-danger p-3">
+          <header> 
+            <ol class="breadcrumb mb-1 mt-1">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Beranda</a></li>
+              {% if page == "form" %}
+              <li class="breadcrumb-item"><a href="{% url 'ListaFunsionariu' %}">Lista Xefe Familia</a></li>
+              {% endif %}
+              <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+            </ol>
+          </header>
+          {% if messages %}
+            {% for message in messages %} 
+              <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          
+          {% if page == "list" %}
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between text-center">
+                  <div class="d-flex justify-content-between">
+                    <a href="{% url 'addxefeFamilia' %}" class="btn btn-sm btn-info mr-2" title="Add Data"> <i class="fa fa-plus-square"></i> Rejistu Xefe Familia</a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example" class="table table-hover table-striped">
+                      <thead>
+                        <tr>
+                          <th>Nu</th>
+                          <th class="text-center"><i class="fa fa-user"></i></th>
+                          <th>nu_Fixa</th>
+                          <th>Naran Xefe Familia</th>
+                          <th class="text-center">Asaun</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data in listaXF %}
+                          {% if request.user.groups.all.0.name == "admin" or data.village == request.user.adminsuku.village %}
+                          <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td class="text-center">{% if data.image %}<a href="{{ data.image.url }}" target="_blank"><img src="{{ data.image.url }}" width="50px" height="50px"></a>{% endif %}</td>
+                            <td>{{ data.nu_Fixa }}</td>
+                            <td>{{ data.xefe_Familia }}</td>
+                            <td>
+                              <div class="d-flex justify-content-center"> 
+                                <div class="flex-fill"><a href="{% url 'detailViewsFixa' data.id %}" class="btn btn-sm btn-info" title="Detallu Funsionario"><i class="fa fa-eye"></i> Detallu</a></div>
+                                <div class="flex-fill"><a href="" class="btn btn-sm btn-success" title="Altera Programa"><i class="fa fa-pencil"></i> Altera</a></div>
+                              </div>  
+                            </td>
+                          </tr>
+                          {% endif %}
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+          {% if page == "form" %}
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between text-center">
+                </div>
+                <div class="card-body">
+                  <script src="{% static 'main/js/jquery.min.js' %}"></script>
+                  {% csrf_token %}
+                  {% crispy form %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <script src="{% static 'main/js/jquery.min.js'%}"> </script>
+          <script type="text/javascript">
+            $("#id_areamunicipality").change(function () {
+              var municipalityId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_posts' %}",
+                data: {
+                  'municipality': municipalityId
+                },
+                success: function (data) {
+                  $("#id_areaadministrativepost").html(data);
+                }
+
+              });
+            });
+            $("#id_areaadministrativepost").change(function () {
+              var postId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_villages' %}",
+                data: {
+                  'post': postId
+                },
+                success: function (data) {
+                  $("#id_areavillage").html(data);
+                }
+              });
+
+            });
+            $("#id_municipality").change(function () {
+              var municipalityId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_posts' %}",
+                data: {
+                  'municipality': municipalityId
+                },
+                success: function (data) {
+                  $("#id_administrativepost").html(data);
+                }
+
+              });
+            });
+            $("#id_administrativepost").change(function () {
+              var postId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_villages' %}",
+                data: {
+                  'post': postId
+                },
+                success: function (data) {
+                  $("#id_village").html(data);
+                }
+              });
+
+            });
+            $("#id_village").change(function () {
+              var villageId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_aldeias' %}",
+                data: {
+                  'village': villageId
+                },
+                success: function (data) {
+                  $("#id_aldeia").html(data);
+                }
+              });
+
+            });
+            //load Imagen
+            function myFunction() {
+              var image = document.getElementById("output");
+              image.src = URL.createObjectURL(event.target.files[0]);
+            }
+            
+          </script>
+          {%endif%}
+        </div>
+      </section>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready( function () {
+        var table = $('#example').removeAttr('width').DataTable( {
+            
+        });
+    } );
+</script>
+{% endblock %}

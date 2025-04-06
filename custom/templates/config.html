@@ -1,0 +1,70 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+<div class="row">
+	<!-- <div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white mb-4" id="tot-suku">
+				<div class="card-header">
+					<h5 class="card-title">Total Suku Munisipiu Dili </h5>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title">{{total_suku}}</h3>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white mb-4">
+				<div class="card-header">
+					<h5 class="card-title">Lista Munisipiu </h5>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title"><a href="{% url 'listaMunisipiu' %}">{{totalMunisipiu}}</a></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white mb-4">
+				<div class="card-header">
+					<h5 class="card-title">Lista Postu</h5>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title"><a href="{% url 'listaPostu' %}">{{totalPostu}}</a></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white mb-4">
+				<div class="card-header">
+					<h5 class="card-title"> Lista Suku</h5>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title"><a href="{% url 'listaSuku' %}">{{totalSuku}}</a></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white mb-4">
+				<div class="card-header">
+					<h5 class="card-title">Lista Aldeia</h5>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title"><a href="{% url 'listaAldeia' %}">{{totalAldeia}}</a></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+</div>
+{% endblock %}

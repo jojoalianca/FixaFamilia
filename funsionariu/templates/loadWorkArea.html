@@ -1,0 +1,52 @@
+{% load static %}
+{% if page == "dn" %}
+Nasional
+{% elif page == "dm" %}
+Area Servisu<br>
+	<select required name="areamunicipality" class="form-control my-2">
+		<option>-----Hili Munisipiu-----</option>
+		{% for i in mun %}
+			<option value="{{i.id}}">{{i.name}}</option>
+		{% endfor %}
+	</select>
+{% elif page == "fp" %}
+Area Servisu<br>
+	<select id="id_areamunicipality" required name="areamunicipality" class="form-control my-2">
+		<option>-----Hili Munisipiu-----</option>
+		{% for i in mun %}
+			<option value="{{i.id}}">{{i.name}}</option>
+		{% endfor %}
+	</select>
+	<select id="id_areaadministrativepost" required name="areaadministrativepost" class="form-control my-2">
+		<option>Postu Administrativu</option>
+	</select>
+
+<script type="text/javascript">
+var $j = jQuery.noConflict();
+$j("#id_areamunicipality").change(function () {
+  var municipalityId = $j(this).val();
+  $j.ajax({
+    url: "{% url 'ajax_load_posts' %}",
+    data: {
+      'municipality': municipalityId
+    },
+    success: function (data) {
+      $j("#id_areaadministrativepost").html(data);
+    }
+
+  });
+});
+$j("#id_areaadministrativepost").change(function () {
+  var postId = $j(this).val();
+  $j.ajax({
+    url: "{% url 'ajax_load_villages' %}",
+    data: {
+      'post': postId
+    },
+    success: function (data) {
+      $j("#id_areavillage").html(data);
+    }
+  });
+
+});
+{% endif %}

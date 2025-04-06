@@ -1,0 +1,400 @@
+{% extends 'public_base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section bg-info text-white py-5 position-relative">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8 mx-auto text-center">
+        <h1 class="display-4 fw-bold mb-3">
+          <i class="fas fa-chart-pie me-2"></i> STATISTIKU POPULASAUN
+        </h1>
+        <p class="lead mb-4">Informasaun Atualizadu kona-ba Populasaun iha Munisipiu Lospalos Postu Administrativu Lautem</p>
+        <div class="d-flex justify-content-center">
+          <div class="last-update bg-dark bg-opacity-50 px-3 py-2 rounded-pill">
+            <small><i class="fas fa-sync-alt me-1"></i> Atualizadu: {% now "j F Y H:i" %}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-shape-divider-bottom">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V7.23C0,65.52,268.63,112.77,600,112.77S1200,65.52,1200,7.23V0Z" class="shape-fill"></path>
+    </svg>
+  </div>
+</section>
+
+<!-- Summary Cards -->
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Male Card -->
+      <div class="col-md-4">
+        <div class="card stat-card bg-white border-0 shadow-sm h-100 hover-effect">
+          <div class="card-body p-4 text-center">
+            <div class="icon-wrapper bg-blue-soft rounded-circle mb-3 mx-auto">
+              <i class="fas fa-male fa-2x text-blue"></i>
+            </div>
+            <h2 class="counter-value display-6 fw-bold text-dark mb-1" data-target="{{ total_maneT }}">{{ total_maneT }}</h2>
+            <p class="mb-0 text-muted">CIDADAUN MANE</p>
+            <div class="mt-3">
+              <span class="badge bg-blue-soft text-blue">
+                {{ total_mane_percentage|floatformat:1 }}% husi total
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Female Card -->
+      <div class="col-md-4">
+        <div class="card stat-card bg-white border-0 shadow-sm h-100 hover-effect">
+          <div class="card-body p-4 text-center">
+            <div class="icon-wrapper bg-pink-soft rounded-circle mb-3 mx-auto">
+              <i class="fas fa-female fa-2x text-pink"></i>
+            </div>
+            <h2 class="counter-value display-6 fw-bold text-dark mb-1" data-target="{{ total_feto }}">{{ total_fetoT }}</h2>
+            <p class="mb-0 text-muted">CIDADAUN FETO</p>
+            <div class="mt-3">
+              <span class="badge bg-pink-soft text-pink">
+                {{ total_feto_percentage|floatformat:1 }}% husi total
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Total Card -->
+      <div class="col-md-4">
+        <div class="card stat-card bg-white border-0 shadow-sm h-100 hover-effect">
+          <div class="card-body p-4 text-center">
+            <div class="icon-wrapper bg-green-soft rounded-circle mb-3 mx-auto">
+              <i class="fas fa-users fa-2x text-green"></i>
+            </div>
+            <h2 class="counter-value display-6 fw-bold text-dark mb-1" data-target="{{ total_populasaun }}">{{ total_populasaun|intcomma }}</h2>
+            <p class="mb-0 text-muted">TOTAL POPULASAUN</p>
+            <div class="mt-3">
+              <span class="badge bg-green-soft text-green">
+                <i class="fas fa-arrow-up me-1"></i> {{ growth_rate|floatformat:1 }}% (anual)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <!-- Gender Distribution Chart -->
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-header bg-white border-0 py-3">
+            <h5 class="mb-0"><i class="fas fa-chart-pie me-2 text-primary"></i> DISTRIBUISAUN JENERU</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="genderChart" height="250"></canvas>
+            <div class="mt-3 text-center">
+              <span class="badge bg-blue me-2">
+                <i class="fas fa-square-full me-1"></i> Mane {{ total_mane_percentage|floatformat:1 }}%
+              </span>
+              <span class="badge bg-pink">
+                <i class="fas fa-square-full me-1"></i> Feto {{ total_feto_percentage|floatformat:1 }}%
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 3 Villages Chart -->
+      <div class="col-lg-6">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-header bg-white border-0 py-3">
+            <h5 class="mb-0"><i class="fas fa-chart-bar me-2 text-primary"></i> TOP 3 SUKU POPULASAUN</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="topV" height="250"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Suku Statistics -->
+<!-- Interactive Data Table -->
+<section class="py-5">
+  <div class="container">
+    <div class="card border-0 shadow-lg">
+      <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-table me-2 text-primary"></i> REJISTU POPULASAUN TUIR SUKU</h5>
+        <div class="d-flex">
+          <div class="input-group input-group-sm me-2" style="width: 200px;">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Buka suku..." id="searchTable">
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown">
+              <i class="fas fa-filter me-1"></i> Filtru
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><h6 class="dropdown-header">Sort by</h6></li>
+              <li><a class="dropdown-item sort-option" href="#" data-sort="total">Populasaun Maior</a></li>
+              <li><a class="dropdown-item sort-option" href="#" data-sort="-total">Populasaun Menor</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item sort-option" href="#" data-sort="name">Naran A-Z</a></li>
+              <li><a class="dropdown-item sort-option" href="#" data-sort="-name">Naran Z-A</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="sukuTable">
+            <thead class="table-light">
+              <tr>
+                <th width="5%">No</th>
+                <th width="30%">Naran Suku</th>
+                <th width="15%" class="text-end">Mane</th>
+                <th width="15%" class="text-end">Feto</th>
+                <th width="20%" class="text-end">Total</th>
+                <th width="15%" class="text-end">%</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for suku in suku_data %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                  <a href="#" class="text-decoration-none text-dark fw-medium d-flex align-items-center">
+                    <span class="badge bg-{% cycle 'primary' 'success' 'info' 'warning' 'danger' %} me-2" style="width: 12px; height: 12px;"></span>
+                    {{ suku.name }}
+                  </a>
+                </td>
+                <td class="text-end">{{ suku.total_mane|intcomma }}</td>
+                <td class="text-end">{{ suku.total_feto|intcomma }}</td>
+                <td class="text-end fw-bold">{{ suku.total|intcomma }}</td>
+                <td class="text-end">
+                  <div class="progress" style="height: 20px;">
+                    <div class="progress-bar bg-{% cycle 'primary' 'success' 'info' 'warning' 'danger' %}" 
+                         role="progressbar" 
+                         style="width: {{ suku.percentage|floatformat:0 }}%" 
+                         aria-valuenow="{{ suku.percentage|floatformat:0 }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                      <small>{{ suku.percentage|floatformat:1 }}%</small>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6" class="text-center py-4">
+                  <i class="fas fa-database fa-3x text-muted mb-3"></i>
+                  <h5 class="text-muted">Dadus la iha</h5>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Age Distribution -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white border-0 py-3">
+        <h5 class="mb-0"><i class="fas fa-chart-area me-2 text-primary"></i> RELATORIU TOTAL CIDADAUN TUIR SUCO</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+                <table id="example" class="table table-bordered table-striped w-100">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Nu</th>
+                            <th>Suku</th>
+                            <th>Mane</th>
+                            <th>Feto</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for xx in loopingMembruFamiliaTuirSuco %}
+                        <tr class="text-center">
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'public_membruFamilia_suku_aldeia' xx.id %}">{{ xx.name }}</a></td>
+                            <td>{{ xx.total_M|default:"0" }}</td>
+                            <td>{{ xx.t_Feto|default:"0" }}</td>
+                            <td>{{ xx.total|default:"0" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                {% if is_admin %}
+                                    Nenhum suku cadastrado
+                                {% else %}
+                                    Nenhum dado encontrado para o Suku {{ request.user.adminsuku.village.name }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Additional Statistics -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="card h-100 border-0 shadow-lg">
+          <div class="card-header bg-white border-0 py-3">
+            <h5 class="mb-0"><i class="fas fa-chart-line me-2 text-primary"></i> Total Cidadaun Tuir Suku</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="villageChart" height="250"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100 border-0 shadow-lg">
+          <div class="card-header bg-white border-0 py-3">
+            <h5 class="mb-0"><i class="fas fa-users me-2 text-primary"></i>Total Cidadaun Tuir Aldeia</h5>
+          </div>
+          <div class="card-body">
+            <canvas id="aldeiaChart" height="250"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">{% include 'chart_js/charts-Village.js' %}</script>
+<script type="text/javascript">{% include 'chart_js/charts-aldeia.js' %}</script>
+<script>
+  // Gender Distribution Chart
+  const genderChartCtx = document.getElementById('genderChart').getContext('2d');
+  new Chart(genderChartCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Mane', 'Feto'],
+      datasets: [{
+        data: {{ gender_distribution.data|safe }},
+        backgroundColor: ['#3b82f6', '#ec4899'],
+        borderColor: ['#fff', '#fff'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem) {
+              return tooltipItem.raw.toFixed(2) + '%';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  // Top 3 Villages Bar Chart
+  const topVChartCtx = document.getElementById('topV').getContext('2d');
+  const topVillageLabels = [{% for suku in top_sukus %}'{{ suku.name }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+  const topVillageData = [{% for suku in top_sukus %}{{ suku.total }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+  new Chart(topVChartCtx, {
+    type: 'bar',
+    data: {
+      labels: topVillageLabels,
+      datasets: [{
+        label: 'Populasaun',
+        data: topVillageData,
+        backgroundColor: '#3b82f6',
+        borderColor: '#3b82f6',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<style>
+/* Custom Styles */
+.hero-section {
+  background: linear-gradient(135deg, #17a2b8 0%, #17a2b8 100%);
+  position: relative;
+  overflow: hidden;
+}
+.custom-shape-divider-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.custom-shape-divider-bottom svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+}
+.shape-fill {
+  fill: #FFFFFF;
+}
+.stat-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+.hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.bg-blue-soft { background-color: rgba(59, 130, 246, 0.1); }
+.text-blue { color: #3b82f6; }
+.bg-pink-soft { background-color: rgba(236, 72, 153, 0.1); }
+.text-pink { color: #ec4899; }
+.bg-green-soft { background-color: rgba(16, 185, 129, 0.1); }
+.text-green { color: #10b981; }
+.bg-blue { background-color: #3b82f6; }
+.bg-pink { background-color: #ec4899; }
+</style>
+{% endblock %}

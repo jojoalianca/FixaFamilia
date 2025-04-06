@@ -1,0 +1,79 @@
+{% extends 'public_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- Menampilkan pesan -->
+        <div class="col-12">
+            {% if messages %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <ul class="list-unstyled mb-0">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Card untuk Foto HP -->
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2>Telefone --{{ phone_info.phone }}--</h2>
+                    <div class="text-center">
+                        <img src="{{ phone_info.image.url }}" alt="Phone Image" class="phone-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card untuk Tabel Detail -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="card-title">Lista Detail Folin Sasan Telefone {{ phone_info.phone }} Nian Ne'ebe Mak At</h6> 
+                    </div>
+                    <hr>
+
+                    <!-- Table to display details -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Type</th>
+                                <th>Type At</th>
+                                <th>Presu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in details %}
+                            <tr>
+                                <td scope="row"> {{forloop.counter}} </td>
+                                <td>{{ detail.tipe_Tlf }}</td>
+                                <td>{{ detail.tipe_At }}</td>
+                                <td>$$.{{ detail.presu }}</td>
+                               
+                            </tr>
+                           
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No details available for this phone.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

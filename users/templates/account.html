@@ -1,0 +1,56 @@
+{% extends "main/layout.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+	<section>
+        <div class="container-fluid">
+          <!-- Page Header-->
+          <header> 
+            <ol class="breadcrumb mb-1 mt-1">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Beranda</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+            </ol>
+          </header>
+          <section class="dashboard-header">
+              <div class="row">
+                <div class="col-xl-4 col-md-4">
+                  <div class="card shadow-lg pt-3 rounded">
+                    <div class="card-header text-center">ACCOUNT INFO</div>
+                    <div class="card-body">
+                      <table class="table table-sm">
+                        <tr>
+                          <td style="font-size: 0.7rem">USERNAME</td>
+                          <td style="font-size: 0.8rem">: {{ user.username }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-size: 0.7rem">EMAIL</td>
+                          <td style="font-size: 0.8rem">: {{ user.email }}</td>
+                        </tr>
+                        <tr>
+                          <td style="font-size: 0.7rem">DATE CREATED</td>
+                          <td style="font-size: 0.8rem">: {{ user.date_joined | date:"F d Y" }}</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="card-footer text-right">
+                      <div class="small"><a href="{% url 'changeAccountPassword' %}">Change password!</a></div>
+                    </div>
+                  </div>
+                </div> <!--end card-md-6-->
+                <div class="col-xl-8 col-md-8">
+                  <div class="card shadow-lg pt-3 rounded">
+                    <div class="card-header">UPDATE ACCOUNT</div>
+                    <div class="card-body">
+                      <form method="post" action="" novalidate>
+            {% csrf_token %}
+            {% crispy form %}
+            
+          </form>
+                    </div>
+                  </div>
+                </div> <!--end card-md-6-->
+              </div> <!--end row-->
+          </section>
+        </div>
+      </section>
+{% endblock %}

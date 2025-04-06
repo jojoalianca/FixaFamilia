@@ -1,0 +1,108 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 border border-danger p-3">
+<section>
+        <div class="container-fluid">
+          <!-- Page Header-->
+          <header> 
+            <ol class="breadcrumb mb-1 mt-1">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Beranda</a></li>
+              {% if page == "form" %}
+              <li class="breadcrumb-item"><a href="{% url 'listaAldeia' %}">Lista Aldeia</a></li>
+              {%endif%}
+              <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+            </ol>
+          </header>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header d-flex justify-content-end text-center">
+                  {% if request.user.is_staff %}
+                  <div class="text-center border">
+                    <a href="{% url 'AddAldeia' %}" class="btn btn-sm btn-info" title="Add Data">Adisiona Aldeia <i class="fa fa-plus-square"></i></a>
+                  </div>
+                    {% endif %}
+                  <!-- <div class="text-center border">
+                    <a href="{% url 'home' %}" target="_blank" class="btn btn-sm btn-info" title="Print Data">Print <i class="fa fa-print"></i></a>
+                  </div>
+                  <div class="text-center border">
+                    <a href="{% url 'home' %}" class="btn btn-sm btn-info" title="Print Data">Csv <i class="fa fa-print"></i></a>
+                  </div>
+                  <div class="text-center border">
+                    <a href="{% url 'home' %}" class="btn btn-sm btn-info" title="Print Data">xls <i class="fa fa-print"></i></a>
+                  </div> -->
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example"  class="table table-hover table-striped w-100">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Aldeia</th>
+                          <th>Suku</th>
+                          <th>Postu</th>
+                          <th>Munisipiu</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data in aldeia %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td>{{ data.name}}</td>
+                          <td>{{ data.village.name }}</td>
+                          <td>{{ data.village.administrativepost.name}}</td>
+                          <td>{{ data.village.administrativepost.municipality.name}}</td>
+
+                          <td><a href="{% url 'updateAldeia' data.id %}" class="btn btn-sm btn-primary" title="Update"><i class="fa fa-pencil"></i></a> 
+
+                          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete-{{ data.id }}" style="text-decoration: none"><i class="fa fa-remove"></i></button>
+                          </td>
+
+                          <div class="modal fade" id="delete-{{ data.id}}"><!-- modal -->
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Delete Aldeia</h4>
+                                  <button type="button" class="close" data-dismiss="modal">X</button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                  Ita Boot hakarak hamoos Aldeia ho naran {{ data.name | upper }}?
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                  <a href="{% url 'deleteAldeia' data.id  %}" class="btn btn-dark">Yes</a>
+                                </div>
+                              </div>
+                            </div>
+                        </div><!-- endmodal -->
+
+                        </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready( function () {
+        var table = $('#example').removeAttr('width').DataTable( {
+            
+        });
+    } );
+</script>
+{% endblock %}

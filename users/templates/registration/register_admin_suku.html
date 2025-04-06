@@ -1,0 +1,97 @@
+{% extends "main/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0 text-center">Registrasaun Admin Suku</h4>
+                </div>
+                <div class="card-body">
+                    {% crispy form %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript untuk Dependent Dropdown -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'main/js/jquery.min.js'%}"> </script>
+          <script type="text/javascript">
+            $("#id_areamunicipality").change(function () {
+              var municipalityId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_posts' %}",
+                data: {
+                  'municipality': municipalityId
+                },
+                success: function (data) {
+                  $("#id_areaadministrativepost").html(data);
+                }
+
+              });
+            });
+            $("#id_areaadministrativepost").change(function () {
+              var postId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_villages' %}",
+                data: {
+                  'post': postId
+                },
+                success: function (data) {
+                  $("#id_areavillage").html(data);
+                }
+              });
+
+            });
+            $("#id_municipality").change(function () {
+              var municipalityId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_posts' %}",
+                data: {
+                  'municipality': municipalityId
+                },
+                success: function (data) {
+                  $("#id_administrativepost").html(data);
+                }
+
+              });
+            });
+            $("#id_administrativepost").change(function () {
+              var postId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_villages' %}",
+                data: {
+                  'post': postId
+                },
+                success: function (data) {
+                  $("#id_village").html(data);
+                }
+              });
+
+            });
+              $("#id_village").change(function () {
+              var villageId = $(this).val();
+              $.ajax({
+                url: "{% url 'ajax_load_aldeias' %}",
+                data: {
+                  'village': villageId
+                },
+                success: function (data) {
+                  $("#id_aldeia").html(data);
+                }
+              });
+
+            });
+          //load Imagen
+            function myFunction() {
+              var image = document.getElementById("output");
+              image.src = URL.createObjectURL(event.target.files[0]);
+            }
+            
+          </script>
+{% endblock %}

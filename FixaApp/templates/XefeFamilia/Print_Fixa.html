@@ -1,0 +1,97 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+<body style="background-color: #f0f0f0;" onload="javascript:window.print()">
+    <!-- Breadcrumb-->
+    <section class="tables">   
+        {% if messages %}
+            {% for message in messages %} 
+                <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-xl-12 col-md-4 card shadow-lg pt-3 rounded">
+                <div class="card-body mb-5" style="background-color: #5DADE2  ;">
+                    <div class="table">
+                        <table border="1" class="table table-bordered w-100" style="background-color: #5DADE2  ;">
+                            <thead>
+                                <tr><th colspan="11" class="text-center">KARTAUN REGISTU UMA KAIN (FIXA FAMILIA)</th></tr>
+                                <tr>
+                                    <th colspan="3">Munisipiu</th> 
+                                    <td>{{ est.municipality }}</td>
+                                    <td rowspan="5" class="text-center">
+                                        {% if est.image %}
+                                            <a href="{{ est.image.url }}" target="_blank"><img src="{{ est.image.url }}" width="200px" height="200px"></a>
+                                        {% endif %}
+                                    </td>
+                                    <th>Nu-Fixa Familia</th>
+                                    <td>{{ est.nu_Fixa }}</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">Postu Administrativo :</th>
+                                    <td>{{ est.administrativepost }}</td>
+                                    <th>Xefe Familia</th>
+                                    <td>{{ est.xefe_Familia }}</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">Suku:</th>
+                                    <td>{{ est.village }}</td>
+                                    <th>Aldeia</th>
+                                    <td>{{ est.aldeia }}</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">Tinan:</th>
+                                    <td>{{ est.tinan }}</td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <div class="table">
+                            <table id="example" border="1" class="table table-bordered w-100"style="background-color: #5DADE2  ;">
+                                <thead>
+                                    <tr>
+                                        <th>Nu</th>
+                                        <th class="text-center">NARAN</th>
+                                        <th>SEXU</th>
+                                        <th>RELASAUN Familia</th>
+                                        <th>FATIN MORIS</th>
+                                        <th>DATA MORIS</th>
+                                        <th>ESTADO SIVIL</th>
+                                        <th>PROFISAUN</th>
+                                        <th>RELEGIAUN</th>
+                                        <th>HABILITASUN LITERARIA</th>
+                                        <th>OBS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in detailest %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td class="text-center">{{ data.naran }}</td>
+                                        <td>{{ data.seksu }}</td>
+                                        <td>{{ data.relasaun }}</td>
+                                        <td>{{ data.Fatin_Moris }}</td>
+                                        <td>{{ data.Data_Moris }}</td>
+                                        <td>{{ data.EStadi_Civil }}</td>
+                                        <td>{{ data.Profisaun }}</td>
+                                        <td>{{ data.religiaun }}</td>
+                                        <td>{{ data.habilitasaun }}</td>
+                                        <td>{{ data.relasaun }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> <!-- end card-body -->
+            </div> <!-- end card-md-6 -->
+        </div> <!-- end row -->
+    </div> <!-- end card-md-6 -->
+</section>
+</body>
+{% endblock %}

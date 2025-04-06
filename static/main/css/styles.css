@@ -1,0 +1,26 @@
+#nav{
+  background: linear-gradient(#005c12,green);
+}
+#a1:hover{
+  border-color: blue;
+}
+#a2:hover{
+  border-color: green;
+}
+#a3:hover{
+  border-color: #d62cd9;
+}
+#s_boxs:hover{
+  /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);*/
+  box-shadow: 0 4px 12px #6aed6a;
+  /*box-shadow: 0 4px 8px #1b5e1b;*/
+
+}#s_boxs{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}#s_boxss:hover{
+  box-shadow: 0 4px 12px #3c3cf5;
+}#s_boxss{
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}

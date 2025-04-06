@@ -1,0 +1,28 @@
+   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i> BERANDA </a></li>
+      
+        <li class="nav-item"><a class="nav-link" href="{% url 'listaBemStar' %}"><i class="fa fa-id-card-o"></i> BEM ESTART </a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'reportjeral' %}"><i class="fa fa-list"></i>REPORT</a></li>
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> RELATORIU</a>
+          <div class="dropdown-menu" aria-labelledby="profile">
+            <a class="dropdown-item" href="{% url 'reportGrafiku'%}"><i class="fa fa-list"></i> Idosus </a>
+            <a class="dropdown-item" href="{% url 'reportGrafikuMorasKroniku'%}"><i class="fa fa-list"></i> Moras Kroniku </a>
+            <a class="dropdown-item" href="{% url 'reportDifisiente_Mun'%}"><i class="fa fa-list"></i> Difisiente </a>
+            <a class="dropdown-item" href="{% url 'reportMLL_mun'%}"><i class="fa fa-list"></i> Ema Ne'ebe Moras  Lemo  Lemo </a>
+            <a class="dropdown-item" href="{% url  'reportFrse_mun'%}"><i class="fa fa-list"></i> Feto Risko Sosial Ekonomiku</a>
+            
+            </div>
+          </li> 
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user.username|upper }}</a>
+          <div class="dropdown-menu" aria-labelledby="profile">
+            <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile </a>
+            <a class="dropdown-item" href="{% url 'manageAccount' %}"><i class="fa fa-users"></i> Account </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout </a>
+          </div>
+        </li>
+      </ul>
+    </div>

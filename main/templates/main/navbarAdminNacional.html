@@ -1,0 +1,41 @@
+
+		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i> BERANDA </a></li>
+				<li class="nav-item"><a class="nav-link" href="{% url 'ListaXefeFamilia' %}"><i class="fa fa-id-card-o"></i>LISTA FAMILIA</a></li>
+				
+			    </li>
+			        <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> RELATORIU</a>
+			          <div class="dropdown-menu" aria-labelledby="profile">
+			            <a class="dropdown-item" href="{% url 'ReportTabular'%}"><i class="fa fa-list"></i> Tabular </a>
+			            <a class="dropdown-item" href="{% url 'ReportgRAFIKO'%}"><i class="fa fa-list"></i>Grafico</a>
+			            </div>
+			          </li> 
+			   
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> DADUS GERAL </a>
+					<div class="dropdown-menu" aria-labelledby="profile">
+						<a class="dropdown-item" href="{% url 'listaMunisipiu' %}"><i class="fa fa-list"></i> Munisipiu </a>
+						<a class="dropdown-item" href="{% url 'listaPostu' %}"><i class="fa fa-list"></i> Postu Administrativu </a>
+	 					<a class="dropdown-item" href="{% url 'listaSuku' %}"><i class="fa fa-list"></i> Suku </a>
+						<a class="dropdown-item" href="{% url 'listaAldeia' %}"><i class="fa fa-list"></i> Aldeia </a>
+						<!-- <a class="dropdown-item" href="{% url 'listaAldeia' %}"><i class="fa fa-list"></i> Tinan </a>
+						<a class="dropdown-item" href="{% url 'listaAldeia' %}"><i class="fa fa-list"></i> Profissaun </a>
+						<a class="dropdown-item" href="{% url 'listaAldeia' %}"><i class="fa fa-list"></i> Relegiaun </a>
+						<a class="dropdown-item" href="{% url 'listaAldeia' %}"><i class="fa fa-list"></i> Habilitasaun Literaria </a> -->
+						
+				  	</div>
+			    </li>
+			    <li class="nav-item"><a class="nav-link" href="{% url 'userlist' %}">USERS <i class="fa fa-users"></i></a></li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user.username|upper }}</a>
+					<div class="dropdown-menu" aria-labelledby="profile">
+						<a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile </a>
+						<a class="dropdown-item" href="{% url 'manageAccount' %}"><i class="fa fa-users"></i> Account </a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout </a>
+					</div>
+				</li>
+			</ul>
+		</div>

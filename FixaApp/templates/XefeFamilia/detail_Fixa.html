@@ -1,0 +1,122 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+{% block content %}
+       
+          <!-- Breadcrumb-->
+        <div class="breadcrumb-holder container-fluid d-flex justify-content-between">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item active">User Profile</li>
+            </ul> 
+            <button class="btn btn-outline-info btn-sm mr-2 mt-3 h6" style="height: 30px;color: blue;font-size: 0.7rem" onclick=self.history.back()><span class="fa fa-angle-left"></span> Back</button> 
+        </div>
+<section class="tables">   
+    <div class="container-fluid">
+                    {% if messages %}
+                        {% for message in messages %} 
+                            <div id="divmessage" class="alert alert-{{ message.tags }} alert-dismissable">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                              {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+    <div class="row">
+      <div class="col-xl-12 col-md-4 card shadow-lg pt-3 rounded">
+          <div class="card-body mb-5">
+            <div class="table-responsive">
+            <table border="1"  class="table table-bordered  w-100">
+               <thead>
+                <tr><th colspan="10" class="text-center">KARTAUN REGISTU UMA KAIN (FIXA FAMILIA)</th><td><a href="{% url 'PrintFixa' est.id %}" class="btn btn-sm btn-dark mb-2"><i class="fa fa-print"></i></a> </td>
+                </tr>
+                
+                    <tr >
+                    <th colspan="3">Munisipiu</th> <td >{{est.municipality}} </td>
+                    <td rowspan="5" class="text-center">{% if est.image %}<a href="{{est.image.url}}" target="_blank"><img src="{{est.image.url}}" width="200px" height="200px"></a>{%else%}{%endif%}</td>       
+                    <th >Nu-Fixa Familia</th>
+                    <td >{{est.nu_Fixa}} </td>
+                  </tr>
+                <tr>
+                    <th colspan="3">Postu Administrativo :</th>
+                    <td >{{est.administrativepost}} </td>
+                     <th>Xefe Familia</th>
+                    <td >{{est.xefe_Familia}} </td>
+                </tr>
+
+                <tr>
+                    <th colspan="3">Suku:</th>
+                    <td >{{est.village}}</td>
+                     <th>Aldeia</th>
+                    <td >{{est.aldeia}} </td>
+                </tr>
+                 <tr >
+                     <th colspan="3">Tinan:</th>
+                    <td >{{est.tinan}}</td>
+                    <td colspan="2"> <a href="{% url 'add_Membro_familia' est.id %}" class="btn btn-sm btn-primary mb-2"style="background: linear-gradient(to bottom,#000080,#000080); text-decoration-color: #000000;"><i class="fa fa-plus-square"></i> Resistu Membru Familia</a> </td>
+                </tr>
+                  <tbody>
+                 </tbody>
+            </table>
+          </div>
+           <div class="card-body">
+                  <div class="table-responsive">
+                    <table id="example" border="1"  class="table table-bordered  w-100">
+                      <thead>
+                        <tr>
+                          <th>Nu</th>
+                          <th class="text-center">NARAN</th>
+                          <th>SEXU</th>
+                          <th>RELASAUN Familia</th>
+                          <th>FATIN MORIS</th>
+                          <th>DATA MORIS</th>
+                          <th>ESTADO SIVIL</th>
+                          <th>PROFISAUN</th>
+                          <th>RELEGIAUN</th>
+                          <th>HABILITASUN LITERARIA</th>
+                          <th>OBS</th>
+                          <th class="text-center">Asaun</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data in detailest  %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{data.naran}}</td>
+                          <td>{{data.seksu }}</td>
+                          <td>{{data.relasaun }}</td>
+                          <td>{{data.Fatin_Moris}}</td>
+                          <td>{{data.Data_Moris}}</td>
+                          <td>{{data.EStadi_Civil}}</td>
+                          <td>{{data.Profisaun}}</td>
+                          <td>{{data.religiaun}}</td>
+                          <td>{{data.habilitasaun}}</td>
+                          <td>{{data.relasaun}}</td>
+                          <td>
+                            <div class="d-flex justify-content-center"> 
+                              <div class="flex-fill"><a href="{%url 'deleteMembroFamilia' data.id %}" class="btn btn-sm btn-danger" title="Delete Membru Familia"><i class="fa fa-remove"></i> </a></div>
+                              <div class="flex-fill"><a href="{%url 'update_MembroFamilia' data.id %}" class="btn btn-sm btn-success" title="Altera Membru Familia"><i class="fa fa-pencil"></i></a></div>
+                            </div>  
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+      </div> <!--end card-md-6-->
+    </div> <!--end row-->
+    </div>
+   </div> <!--end card-md-6-->
+ 
+</section>
+
+{% endblock  %}
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready( function () {
+        var table = $('#example').removeAttr('width').DataTable( {
+            
+        });
+    } );
+</script>
+{% endblock %}

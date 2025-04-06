@@ -1,0 +1,21 @@
+{% load static %}
+<header class="site-header">
+	<!-- <nav class="navbar navbar-expand-md navbar-secundary bg-steel fixed-top"> -->
+		<nav class="navbar navbar-expand-md text-black fixed-top" style="background: linear-gradient(to bottom, #006600,#003333); text-decoration-color: #000000;">
+		<a class="navbar-brand text-white" href="{% url 'home' %}">
+		<font face = "Verdana"><img src="{% static 'main/images/images.jpeg' %}" alt="Logo" style="width:30px;"> SR-FIXA FAMILIA LOSPALOS
+		</a></font>
+		<button class="navbar-toggler bg-light" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon bg-dark"></span>
+		</button>
+		{% if user.is_authenticated %}
+			{% if user.groups.all.0.name == 'admin' %}
+				{% include 'main/navbarAdminNacional.html' %}
+			{% elif user.groups.all.0.name == 'Admin Suku' %}
+				{% include 'main/navbarSuco.html' %}
+			{% elif user.groups.all.0.name == 'Aldeia' %}
+				{% include 'main/navbarAldeia.html' %}
+			{% endif %}
+		{% endif %}
+	</nav>
+</header>
